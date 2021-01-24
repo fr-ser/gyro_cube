@@ -1,9 +1,9 @@
-from pydantic import BaseModel, conint
+from pydantic import BaseModel, Field
 
 
 class GyroSideBase(BaseModel):
     timestamp: int
-    side: conint(gt=0, lt=5)
+    side: int = Field(..., gt=0, lt=5)
     name: str
 
 
@@ -18,7 +18,7 @@ class GyroSide(GyroSideBase):
 
 class GyroLogBase(BaseModel):
     timestamp: int
-    side: conint(gt=0, lt=5)
+    side: int = Field(..., gt=0, lt=5)
 
 
 class GyroLogCreate(GyroLogBase):

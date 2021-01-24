@@ -12,6 +12,8 @@ unit-test:
 linting-test:
 	pipenv run flake8
 	@echo "Linting passed"
+	pipenv run mypy server_src --config-file tox.ini
+
 
 integration-test:
 	pipenv run pytest tests/integration
