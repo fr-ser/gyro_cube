@@ -11,12 +11,19 @@ def test_parse_users_none():
     assert parse_users(None) == {}
 
 
-@pytest.mark.parametrize("config_path, value", [
-    ("config.AUTH_USERS", {}),
-    ("config.SQLALCHEMY_DATABASE_URL", None),
-])
-def test_missing_environment_config(monkeypatch, config_path, value):
-    monkeypatch.setattr(config_path, value)
+@pytest.mark.parametrize("env", ["AUTH_USERS", "SQLALCHEMY_DATABASE_URL"])
+def test_missing_environment_config_production(monkeypatch, env):
+    monkeypatch.setattr("config.ENVIRONMENT", "production")
+    monkeypatch.delenv(env, raising=False)
 
     with pytest.raises(ValueError):
         validate_config()
+
+
+def test_missing_environment_config_development(monkeypatch):
+    monkeypatch.setattr("config.ENVIRONMENT", "development")
+
+    monkeypatch.delenv("AUTH_USERS", raising=False)
+    monkeypatch.delenv("SQLALCHEMY_DATABASE_URL", raising=False)
+
+    validate_config()

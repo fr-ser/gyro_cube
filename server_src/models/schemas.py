@@ -1,7 +1,12 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, BaseConfig
 
 
-class GyroSideBase(BaseModel):
+class BaseSchema(BaseModel):
+    class Config(BaseConfig):
+        allow_population_by_field_name = True
+
+
+class GyroSideBase(BaseSchema):
     timestamp: int
     side: int = Field(..., gt=0, lt=5)
     name: str
@@ -16,7 +21,7 @@ class GyroSide(GyroSideBase):
         orm_mode = True
 
 
-class GyroLogBase(BaseModel):
+class GyroLogBase(BaseSchema):
     timestamp: int
     side: int = Field(..., gt=0, lt=5)
 

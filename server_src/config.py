@@ -1,6 +1,6 @@
 import os
 
-
+ENVIRONMENT = os.environ.get("ENVIRONMENT", "production")
 LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
 LOG_AS_JSON = bool(int(os.environ.get("LOG_AS_JSON", "0")))
 
@@ -28,9 +28,9 @@ def parse_users(auth_users):
     return dict([i.split(":") for i in auth_users.split(',')])
 
 
-AUTH_USERS = parse_users(os.environ.get("AUTH_USERS"))
+AUTH_USERS = parse_users(os.environ.get("AUTH_USERS", "me:self,him:other"))
 
-SQLALCHEMY_DATABASE_URL = os.environ.get("SQLALCHEMY_DATABASE_URL")
+SQLALCHEMY_DATABASE_URL = os.environ.get("SQLALCHEMY_DATABASE_URL", "sqlite:///local_dev.db")
 
 
 def validate_config():
@@ -39,8 +39,8 @@ def validate_config():
     Using this in favor of os.environ[...] importing this module without
     errors, which makes testing easier
     """
-    if not AUTH_USERS:
-        raise ValueError("Missing/Invalid configuration for 'AUTH_USERS'")
 
-    if not SQLALCHEMY_DATABASE_URL:
-        raise ValueError("Missing/Invalid configuration for 'SQLALCHEMY_DATABASE_URL'")
+    if ENVIRONMENT not in ("development", "testing"):
+        for env in ["AUTH_USERS", "SQLALCHEMY_DATABASE_URL"]:
+            if not os.environ.get(env):
+                raise ValueError(f"Missing/Invalid configuration for '{env}'")

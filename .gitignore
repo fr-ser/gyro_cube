@@ -17,3 +17,5 @@ __pycache__/
 
 # App
 local_dev.db
+local_test.db
+server.pid

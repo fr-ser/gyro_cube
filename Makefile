@@ -1,10 +1,13 @@
 install:
 	python -m pipenv install --python 3.9 --dev
 
-start:
+bootstrap_db:
 	rm -f local_dev.db
-	sqlite3 local_dev.db < migrations/01_create_tables.sql
-	PIPENV_DOTENV_LOCATION=bootstrap.env python -m pipenv run python server_src/main.py
+	sqlite3 local_dev.db < migrations/01_gyro_sides_table.sql
+	sqlite3 local_dev.db < migrations/02_gyro_logs_table.sql
+
+start: bootstrap_db
+	ENVIRONMENT=development python -m pipenv run python server_src/main.py
 
 unit-test:
 	PYTHONPATH=./server_src pipenv run pytest server_tests/unit
@@ -16,10 +19,13 @@ linting-test:
 
 
 integration-test:
-	pipenv run pytest tests/integration
+	PYTHONPATH=./server_src pipenv run pytest server_tests/integration
 
 e2e-test:
-	docker-compose build
-	docker-compose up -d
-	sleep 10
-	PYTHONPATH=./src pipenv run pytest tests/e2e
+	ENVIRONMENT=development pipenv run python server_src/main.py > /dev/null 2>&1 & echo "$$!" > server.pid
+
+	PYTHONPATH=./server_src pipenv run pytest server_tests/e2e
+	kill -15 $$(cat server.pid)
+	rm server.pid
+
+test: unit-test linting-test integration-test e2e-test

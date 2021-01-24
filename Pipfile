@@ -15,6 +15,11 @@ mypy = "*"
 sqlalchemy-stubs = "*"
 flake8 = "*"
 pytest = "*"
+httpx = "*"
+pytest-asyncio = "*"
+faker = "*"
+pytest-factoryboy = "*"
+factory-boy = "*"
 
 [requires]
 python_version = "3.9"
