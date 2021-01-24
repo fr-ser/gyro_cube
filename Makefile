@@ -7,7 +7,7 @@ start:
 	PIPENV_DOTENV_LOCATION=bootstrap.env python -m pipenv run python server_src/main.py
 
 unit-test:
-	PYTHONPATH=./src pipenv run pytest tests/unit
+	PYTHONPATH=./server_src pipenv run pytest server_tests/unit
 
 linting-test:
 	pipenv run flake8

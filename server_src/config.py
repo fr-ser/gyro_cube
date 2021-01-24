@@ -18,17 +18,29 @@ OPEN_API_TAGS = [
 
 def parse_users(auth_users):
     """
-    in the ENV we expect a string like
-        "user:password,new_user:new_password"
+    :param auth_users str: example "user:password,new_user:new_password"
+
     :return: dict with usernames as keys and passwords as values
     """
-    env_content = os.environ.get("AUTH_USERS")
-    if not env_content:
+    if not auth_users:
         return {}
 
-    return dict([i.split(":") for i in env_content.split(',')])
+    return dict([i.split(":") for i in auth_users.split(',')])
 
 
-AUTH_USERS = parse_users(os.environ["AUTH_USERS"])
+AUTH_USERS = parse_users(os.environ.get("AUTH_USERS"))
 
-SQLALCHEMY_DATABASE_URL = os.environ["SQLALCHEMY_DATABASE_URL"]
+SQLALCHEMY_DATABASE_URL = os.environ.get("SQLALCHEMY_DATABASE_URL")
+
+
+def validate_config():
+    """
+    Checks that all required configurations are set.
+    Using this in favor of os.environ[...] importing this module without
+    errors, which makes testing easier
+    """
+    if not AUTH_USERS:
+        raise ValueError("Missing/Invalid configuration for 'AUTH_USERS'")
+
+    if not SQLALCHEMY_DATABASE_URL:
+        raise ValueError("Missing/Invalid configuration for 'SQLALCHEMY_DATABASE_URL'")

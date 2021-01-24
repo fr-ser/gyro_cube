@@ -5,7 +5,7 @@ from loguru import logger
 import uvicorn
 
 from api.api_v1.api import api_router
-from config import LOG_LEVEL, LOG_AS_JSON, OPEN_API_TAGS
+from config import validate_config, LOG_LEVEL, LOG_AS_JSON, OPEN_API_TAGS
 from models import models
 from models.database import engine
 
@@ -28,5 +28,6 @@ app.include_router(api_router, prefix="/V1")
 
 
 if __name__ == "__main__":
+    validate_config()
     setup_logging()
     uvicorn.run(app, host="0.0.0.0", port=8000)
