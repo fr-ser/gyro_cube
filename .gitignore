@@ -1,0 +1,16 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Unit test / coverage reports
+.tox/
+.cache
+.pytest_cache/
+
+# Environments
+.env
+.venv
+
+# App
+local_dev.db
