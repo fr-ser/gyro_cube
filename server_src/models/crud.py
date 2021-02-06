@@ -6,14 +6,14 @@ from sqlalchemy.sql.expression import func
 from . import models, schemas
 
 
-def get_gyro_log(db: Session, timestamp: int):
-    return (
-        db.query(models.GyroLog).filter(models.GyroLog.timestamp == timestamp).first()
-    )
-
-
 def get_gyro_logs(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.GyroLog).offset(skip).limit(limit).all()
+    return (
+        db.query(models.GyroLog)
+        .order_by(models.GyroLog.timestamp.desc())
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
 
 
 def create_gyro_log(db: Session, side: int):
@@ -32,18 +32,14 @@ def create_gyro_log(db: Session, side: int):
     return db_gyro_log
 
 
-def get_current_gyro_side_name(db: Session):
-    return db.query(models.GyroSide).order_by(models.GyroSide.timestamp.desc()).first()
-
-
-def get_gyro_side_name(db: Session, timestamp: int):
-    return (
-        db.query(models.GyroSide).filter(models.GyroSide.timestamp == timestamp).first()
-    )
-
-
 def get_gyro_side_names(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.GyroSide).offset(skip).limit(limit).all()
+    return (
+        db.query(models.GyroSide)
+        .order_by(models.GyroSide.timestamp.desc())
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
 
 
 def create_gyro_side_name(db: Session, side_name: schemas.GyroSide):

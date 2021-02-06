@@ -9,9 +9,10 @@ from sqlalchemy.orm import sessionmaker
 from main import app
 from models.database import get_db
 
-from .factories import GyroSideFactory
+from .factories import GyroSideFactory, GyroLogFactory
 
 register(GyroSideFactory)
+register(GyroLogFactory)
 
 TEST_DB_FILE = Path("local_test.db")
 

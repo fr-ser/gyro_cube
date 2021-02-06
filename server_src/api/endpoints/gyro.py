@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from fastapi_pagination import pagination_params, Page
 from fastapi_pagination.paginator import paginate
 from sqlalchemy.orm import Session
@@ -51,7 +51,9 @@ def read_side_names(
     return paginate(gyro_side_names)
 
 
-@router.post("/sides", response_model=schemas.GyroSide)
+@router.post(
+    "/sides", response_model=schemas.GyroSide, status_code=status.HTTP_201_CREATED
+)
 def create_side_names(
     side_name: schemas.GyroSideCreate,
     db: Session = Depends(get_db),
@@ -63,7 +65,9 @@ def create_side_names(
     return crud.create_gyro_side_name(db, side_name)
 
 
-@router.post("/logs", response_model=schemas.GyroLog)
+@router.post(
+    "/logs", response_model=schemas.GyroLog, status_code=status.HTTP_201_CREATED
+)
 def create_log(
     side: int,
     db: Session = Depends(get_db),
