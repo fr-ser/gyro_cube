@@ -25,8 +25,10 @@ def auth():
 def db_session():
     TEST_DB_FILE.unlink(missing_ok=True)
     TEST_DB_FILE.touch()
-    engine = create_engine(f"sqlite:///{TEST_DB_FILE.absolute()}",
-                           connect_args={"check_same_thread": False})
+    engine = create_engine(
+        f"sqlite:///{TEST_DB_FILE.absolute()}",
+        connect_args={"check_same_thread": False},
+    )
     session = sessionmaker(autocommit=False, autoflush=False, bind=engine)()
 
     for mig in Path("migrations").glob("*.sql"):

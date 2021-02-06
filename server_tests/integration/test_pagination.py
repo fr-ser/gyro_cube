@@ -7,7 +7,7 @@ async def test_pagination(client, db_session, gyro_side_factory):
     db_session.add_all(stuff)
     db_session.commit()
 
-    response = await client.get("/V1/gyro/sides?size=5&page=3")
+    response = await client.get("/gyro/sides?size=5&page=3")
     assert response.status_code == 200
 
     given = response.json()

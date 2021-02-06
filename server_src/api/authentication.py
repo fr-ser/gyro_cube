@@ -14,11 +14,11 @@ def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
     Use BasicAuth to authenticate
     """
 
-    if (
-            credentials.username in config.AUTH_USERS and
-            secrets.compare_digest(credentials.password, config.AUTH_USERS[credentials.username])
+    if credentials.username in config.AUTH_USERS and secrets.compare_digest(
+        credentials.password, config.AUTH_USERS[credentials.username]
     ):
         return True
 
-    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                        detail="Token is invalid")
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED, detail="Token is invalid"
+    )

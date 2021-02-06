@@ -9,5 +9,5 @@ async def test_can_get_open_api_spec(client):
 
 @pytest.mark.asyncio
 async def test_health(client):
-    response = await client.get("/V1/admin/health")
+    response = await client.get("/admin/health")
     assert response.status_code == 204

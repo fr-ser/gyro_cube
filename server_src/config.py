@@ -9,10 +9,7 @@ OPEN_API_TAGS = [
         "name": "admin",
         "description": "Administrative Tasks like checking health",
     },
-    {
-        "name": "gyro",
-        "description": "Gyro Cube endpoints"
-    },
+    {"name": "gyro", "description": "Gyro Cube endpoints"},
 ]
 
 
@@ -25,12 +22,14 @@ def parse_users(auth_users):
     if not auth_users:
         return {}
 
-    return dict([i.split(":") for i in auth_users.split(',')])
+    return dict([i.split(":") for i in auth_users.split(",")])
 
 
 AUTH_USERS = parse_users(os.environ.get("AUTH_USERS", "me:self,him:other"))
 
-SQLALCHEMY_DATABASE_URL = os.environ.get("SQLALCHEMY_DATABASE_URL", "sqlite:///local_dev.db")
+SQLALCHEMY_DATABASE_URL = os.environ.get(
+    "SQLALCHEMY_DATABASE_URL", "sqlite:///local_dev.db"
+)
 
 
 def validate_config():

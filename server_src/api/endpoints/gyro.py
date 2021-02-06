@@ -11,10 +11,17 @@ from models import schemas, crud
 router = APIRouter()
 
 
-@router.get("/logs", response_model=Page[schemas.GyroLog],
-            dependencies=[Depends(pagination_params)])
-def read_logs(db: Session = Depends(get_db), is_user_valid: bool = Depends(authenticate),
-              skip: int = 0, limit: int = 100,):
+@router.get(
+    "/logs",
+    response_model=Page[schemas.GyroLog],
+    dependencies=[Depends(pagination_params)],
+)
+def read_logs(
+    db: Session = Depends(get_db),
+    is_user_valid: bool = Depends(authenticate),
+    skip: int = 0,
+    limit: int = 100,
+):
     """
     Retrieve gyro_logs.
     """
@@ -24,10 +31,17 @@ def read_logs(db: Session = Depends(get_db), is_user_valid: bool = Depends(authe
     return paginate(gyro_logs)
 
 
-@router.get("/sides", response_model=Page[schemas.GyroSide],
-            dependencies=[Depends(pagination_params)])
-def read_side_names(db: Session = Depends(get_db), is_user_valid: bool = Depends(authenticate),
-                    skip: int = 0, limit: int = 100,):
+@router.get(
+    "/sides",
+    response_model=Page[schemas.GyroSide],
+    dependencies=[Depends(pagination_params)],
+)
+def read_side_names(
+    db: Session = Depends(get_db),
+    is_user_valid: bool = Depends(authenticate),
+    skip: int = 0,
+    limit: int = 100,
+):
     """
     Retrieve gyro_side_names.
     """
@@ -38,8 +52,11 @@ def read_side_names(db: Session = Depends(get_db), is_user_valid: bool = Depends
 
 
 @router.post("/sides", response_model=schemas.GyroSide)
-def create_side_names(side_name: schemas.GyroSideCreate, db: Session = Depends(get_db),
-                      is_user_valid: bool = Depends(authenticate)):
+def create_side_names(
+    side_name: schemas.GyroSideCreate,
+    db: Session = Depends(get_db),
+    is_user_valid: bool = Depends(authenticate),
+):
     """
     Create gyro_side_names.
     """
@@ -47,9 +64,12 @@ def create_side_names(side_name: schemas.GyroSideCreate, db: Session = Depends(g
 
 
 @router.post("/logs", response_model=schemas.GyroLog)
-def create_log(log: schemas.GyroLogCreate, db: Session = Depends(get_db),
-               is_user_valid: bool = Depends(authenticate)):
+def create_log(
+    side: int,
+    db: Session = Depends(get_db),
+    is_user_valid: bool = Depends(authenticate),
+):
     """
     Create gyro_logs.
     """
-    return crud.create_gyro_log(db, log)
+    return crud.create_gyro_log(db, side)
