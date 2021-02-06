@@ -1,5 +1,5 @@
 install:
-	python -m pipenv install --python 3.9 --dev
+	python -m pipenv install --python 3.7 --dev
 
 bootstrap_db:
 	rm -f local_dev.db

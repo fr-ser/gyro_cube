@@ -24,7 +24,8 @@ def auth():
 
 @pytest.fixture
 def db_session():
-    TEST_DB_FILE.unlink(missing_ok=True)
+    if TEST_DB_FILE.exists():
+        TEST_DB_FILE.unlink()
     TEST_DB_FILE.touch()
     engine = create_engine(
         f"sqlite:///{TEST_DB_FILE.absolute()}",
