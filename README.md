@@ -10,3 +10,8 @@ In the end the Gyro Cube should work similarly.
 ### Server
 
 Use `make start` to start a local development server.
+
+## Workflow
+
+The cube as an On/Off-Switch.
+When turned on the cube performs a reading roughly every 15 minutes.

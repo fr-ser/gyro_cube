@@ -19,3 +19,6 @@ __pycache__/
 local_dev.db
 local_test.db
 server.pid
+
+# contains wifi credentials
+**/gyro_client/

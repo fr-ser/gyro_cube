@@ -29,3 +29,9 @@ e2e-test:
 	rm server.pid
 
 test: unit-test linting-test integration-test e2e-test
+
+client:
+	rm sensor_client/gyro_client/*
+	for file in sensor_client/src/*; \
+		do envsubst < "sensor_client/src/$$(basename $$file)" > "sensor_client/gyro_client/$$(basename $$file)"; \
+	done
