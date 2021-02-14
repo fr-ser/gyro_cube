@@ -37,7 +37,7 @@ server-e2e-test:
 
 server-test: server-unit-test server-linting-test server-integration-test server-e2e-test
 
-client:
+build-client:
 	rm client/gyro_client/*
 	for file in client/src/*; \
 		do envsubst < "client/src/$$(basename $$file)" > "client/gyro_client/$$(basename $$file)"; \
