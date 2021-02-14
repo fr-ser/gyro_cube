@@ -13,5 +13,6 @@ Use `make start` to start a local development server.
 
 ## Workflow
 
-The cube as an On/Off-Switch.
-When turned on the cube performs a reading roughly every 15 minutes.
+The cube has an On/Off-Switch.
+When turned on the cube performs a reading roughly every 15 minutes and sends it to the server.
+On the server it is stored in a database to be later used for reports.

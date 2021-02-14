@@ -16,8 +16,7 @@ __pycache__/
 .venv
 
 # App
-local_dev.db
-local_test.db
+*.db
 server.pid
 
 # contains wifi credentials

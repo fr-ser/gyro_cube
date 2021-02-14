@@ -1,0 +1,18 @@
+[Unit]
+Description=gyroscope server
+After=network.target
+
+[Service]
+EnvironmentFile=/home/pi/gyro_cube/.env
+PassEnvironment=ENVIRONMENT AUTH_USERS SQLALCHEMY_DATABASE_URL
+User=pi
+Group=pi
+RuntimeDirectory=gunicorn
+WorkingDirectory=/home/pi/gyro_cube/
+ExecStart=python3 server/src/main.py
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
