@@ -2,6 +2,7 @@ import sys
 
 from fastapi import FastAPI
 from loguru import logger
+from starlette.responses import RedirectResponse
 import uvicorn
 
 from api.api import api_router
@@ -28,6 +29,11 @@ models.Base.metadata.create_all(bind=engine)
 app = FastAPI(title="GyroLogServer", openapi_tags=OPEN_API_TAGS)
 
 app.include_router(api_router)
+
+
+@app.get("/", include_in_schema=False)
+async def home_redirect():
+    return RedirectResponse(url="/docs")
 
 
 if __name__ == "__main__":
