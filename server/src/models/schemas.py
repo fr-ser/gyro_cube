@@ -8,7 +8,7 @@ class BaseSchema(BaseModel):
 
 class GyroSideBase(BaseSchema):
     timestamp: int
-    side: int = Field(..., gt=0, lt=7)
+    side: int = Field(..., gt=-1, lt=7)
     name: str
 
 
@@ -23,7 +23,7 @@ class GyroSide(GyroSideBase):
 
 class GyroLogBase(BaseSchema):
     timestamp: int
-    side: int = Field(..., gt=0, lt=7)
+    side: int = Field(..., gt=-1, lt=7)
 
 
 class GyroLogCreate(GyroLogBase):
